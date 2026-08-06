@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kishore Kumar A — Embedded Systems &amp; Instrumentation Engineer</title>
+<meta name="description" content="Portfolio of Kishore Kumar A, final-year Electronics and Instrumentation Engineering student — embedded hardware, industrial automation, IoT.">
+
+<!-- Open Graph / social preview -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Kishore Kumar A — Embedded Systems &amp; Instrumentation Engineer">
+<meta property="og:description" content="Final-year EIE student building embedded hardware, industrial automation and IoT sensor systems. STM32 · ESP32 · Siemens S7-1200 PLC.">
+<meta property="og:image" content="https://kishorekumara13.github.io/assets/photo.jpg">
+<meta property="og:url" content="https://kishorekumara13.github.io/">
+<meta property="og:site_name" content="Kishore Kumar A — Portfolio">
+
+<!-- Twitter / X card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Kishore Kumar A — Embedded Systems &amp; Instrumentation Engineer">
+<meta name="twitter:description" content="Final-year EIE student building embedded hardware, industrial automation and IoT sensor systems.">
+<meta name="twitter:image" content="https://kishorekumara13.github.io/assets/photo.jpg">
+
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0a0f1a;
+    --bg-panel: #101a2c;
+    --bg-panel-2: #0d1523;
+    --grid: rgba(110,231,196,0.05);
+    --copper: #c08552;
+    --copper-bright: #e3ac74;
+    --signal: #6ee7c4;
+    --signal-dim: rgba(110,231,196,0.35);
+    --text: #e9eef5;
+    --text-dim: #8a98ae;
+    --text-faint: #5b697e;
+    --border: rgba(255,255,255,0.09);
+    --danger-red: #e26d5a;
+    --font-display: 'Space Grotesk', sans-serif;
+    --font-body: 'IBM Plex Sans', sans-serif;
+    --font-mono: 'IBM Plex Mono', monospace;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important;}
+  }
+
+  body{
+    background:
+      linear-gradient(var(--grid) 1px, transparent 1px) 0 0/48px 48px,
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px) 0 0/48px 48px,
+      var(--bg);
+    color:var(--text);
+    font-family:var(--font-body);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+
+  a{color:inherit;}
+  ::selection{background:var(--signal); color:#08110d;}
+  :focus-visible{outline:2px solid var(--signal); outline-offset:3px;}
+
+  .wrap{max-width:1040px; margin:0 auto; padding:0 32px;}
+  @media (max-width:640px){ .wrap{padding:0 20px;} }
+
+  /* ---------- NAV ---------- */
+  nav{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 32px;
+    background:rgba(10,15,26,0.85);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--border);
+  }
+  .nav-mark{
+    font-family:var(--font-mono); font-size:13px; letter-spacing:0.06em;
+    color:var(--copper-bright); display:flex; align-items:center; gap:8px;
+  }
+  .nav-mark .dot{width:7px;height:7px;border-radius:50%;background:var(--signal); box-shadow:0 0 8px var(--signal);}
+  .nav-links{display:flex; gap:28px; font-family:var(--font-mono); font-size:12px; letter-spacing:0.05em;}
+  .nav-links a{color:var(--text-dim); text-decoration:none; transition:color .2s;}
+  .nav-links a:hover, .nav-links a.active{color:var(--signal);}
+  @media (max-width:760px){ .nav-links{display:none;} }
+
+  /* ---------- CIRCUIT RAIL (signature element) ---------- */
+  .rail{
+    position:absolute; left:0; top:0; bottom:0; width:32px;
+    display:flex; justify-content:center;
+  }
+  .rail::before{
+    content:''; position:absolute; top:0; bottom:0; left:50%;
+    width:2px; background:linear-gradient(var(--copper), transparent 2%, var(--copper) 98%, transparent);
+    opacity:0.55;
+  }
+  @media (max-width:760px){ .rail{display:none;} }
+
+  section{position:relative;}
+  .pad{
+    position:absolute; left:16px; top:64px; transform:translateX(-50%);
+    width:13px; height:13px; border-radius:50%;
+    background:var(--bg-panel-2); border:2px solid var(--copper);
+    z-index:2;
+  }
+  .pad::after{
+    content:''; position:absolute; top:50%; left:100%; width:20px; height:2px;
+    background:var(--copper); transform:translateY(-50%);
+  }
+  @media (max-width:760px){ .pad{display:none;} }
+
+  /* ---------- HERO ---------- */
+  header.hero{
+    min-height:100vh; display:flex; flex-direction:column; justify-content:center;
+    position:relative; padding-top:80px; padding-bottom:60px;
+    border-bottom:1px solid var(--border);
+  }
+  .hero-inner{position:relative; z-index:2; display:flex; align-items:center; justify-content:space-between; gap:56px;}
+  .hero-text{flex:1; min-width:0;}
+  .hero-photo{
+    position:relative; flex-shrink:0; width:220px; height:264px;
+  }
+  .hero-photo::before{
+    content:''; position:absolute; inset:-18px; z-index:0; border-radius:16px;
+    background:radial-gradient(circle at 50% 35%, rgba(110,231,196,0.22), rgba(192,133,82,0.10) 55%, transparent 75%);
+    filter:blur(18px);
+  }
+  .hero-photo .frame{
+    position:absolute; inset:0; padding:6px; z-index:1;
+    border:1px solid rgba(110,231,196,0.4); border-radius:8px;
+    background:linear-gradient(160deg, rgba(110,231,196,0.14), rgba(192,133,82,0.08));
+    box-shadow:0 12px 40px rgba(0,0,0,0.35);
+  }
+  .hero-photo img{
+    width:100%; height:100%; object-fit:cover; border-radius:4px;
+    filter:contrast(1.03) brightness(1.12) saturate(1.05);
+    display:block;
+  }
+  .hero-photo .tag{
+    position:absolute; bottom:-30px; left:0; right:0; text-align:center; z-index:1;
+    font-family:var(--font-mono); font-size:10px; color:var(--text-faint); letter-spacing:0.08em;
+  }
+  @media (max-width:900px){
+    .hero-inner{flex-direction:column-reverse; align-items:flex-start; gap:36px;}
+    .hero-photo{width:150px; height:180px;}
+    .hero-photo .tag{display:none;}
+  }
+  .eyebrow{
+    font-family:var(--font-mono); font-size:12.5px; color:var(--signal);
+    letter-spacing:0.14em; text-transform:uppercase; margin-bottom:22px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .eyebrow::before{content:'●'; color:var(--signal); font-size:8px; animation:blink 1.8s infinite;}
+  @keyframes blink{0%,100%{opacity:1;} 50%{opacity:0.25;}}
+
+  h1.name{
+    font-family:var(--font-display); font-weight:700;
+    font-size:clamp(2.6rem, 6.5vw, 5.2rem);
+    line-height:0.98; letter-spacing:-0.02em;
+    color:var(--text);
+  }
+  h1.name .accent{color:transparent; -webkit-text-stroke:1.5px var(--copper-bright);}
+
+  .hero-role{
+    font-family:var(--font-mono); font-size:clamp(0.95rem,1.6vw,1.15rem);
+    color:var(--text-dim); margin-top:20px; max-width:640px;
+    border-left:2px solid var(--copper); padding-left:16px;
+  }
+  .hero-role b{color:var(--copper-bright); font-weight:500;}
+
+  .readout{
+    margin-top:44px; display:grid; grid-template-columns:repeat(4,1fr);
+    border:1px solid var(--border); border-radius:6px; overflow:hidden;
+    background:rgba(16,26,44,0.5);
+  }
+  .readout div{
+    padding:14px 16px; border-right:1px solid var(--border);
+  }
+  .readout div:last-child{border-right:none;}
+  .readout .label{font-family:var(--font-mono); font-size:10px; color:var(--text-faint); letter-spacing:0.08em; text-transform:uppercase;}
+  .readout .value{font-family:var(--font-mono); font-size:14px; color:var(--signal); margin-top:5px; font-weight:500;}
+  @media (max-width:700px){ .readout{grid-template-columns:repeat(2,1fr);} .readout div{border-bottom:1px solid var(--border);} }
+
+  .scope{
+    position:absolute; right:0; top:0; bottom:0; width:44%;
+    opacity:0.5; pointer-events:none;
+  }
+  @media (max-width:900px){ .scope{display:none;} }
+  .scope-path{
+    fill:none; stroke:var(--signal); stroke-width:1.6;
+    stroke-dasharray:1400; stroke-dashoffset:1400;
+    animation:draw 3.5s ease-out forwards, glow 3.5s ease-in-out 3.5s infinite;
+  }
+  @keyframes draw{ to{stroke-dashoffset:0;} }
+  @keyframes glow{ 0%,100%{opacity:0.55;} 50%{opacity:0.95;} }
+
+  .scroll-cue{
+    margin-top:56px; font-family:var(--font-mono); font-size:11px; color:var(--text-faint);
+    letter-spacing:0.08em; display:flex; align-items:center; gap:10px;
+  }
+  .scroll-cue .bar{width:24px; height:1px; background:var(--text-faint);}
+
+  /* ---------- SECTION SCAFFOLD ---------- */
+  .section{padding:100px 0 20px; border-bottom:1px solid var(--border);}
+  .section-inner{padding-left:0;}
+  @media (min-width:761px){ .section-inner{padding-left:36px;} }
+
+  .sec-head{margin-bottom:44px;}
+  .sec-tag{
+    font-family:var(--font-mono); font-size:11px; color:var(--copper-bright);
+    letter-spacing:0.12em; text-transform:uppercase; margin-bottom:10px;
+  }
+  h2{
+    font-family:var(--font-display); font-weight:600;
+    font-size:clamp(1.7rem,3.2vw,2.4rem); letter-spacing:-0.01em;
+  }
+  .sec-desc{color:var(--text-dim); max-width:600px; margin-top:14px; font-size:0.98rem;}
+
+  /* ---------- SUMMARY ---------- */
+  .summary-text{
+    font-size:1.12rem; color:var(--text); max-width:720px; line-height:1.75;
+  }
+  .summary-text .hl{color:var(--signal); font-family:var(--font-mono); font-size:0.95em;}
+
+  /* ---------- SKILLS (pinout style) ---------- */
+  .pinout{display:grid; grid-template-columns:repeat(2,1fr); gap:1px; background:var(--border); border:1px solid var(--border); border-radius:8px; overflow:hidden;}
+  @media (max-width:640px){ .pinout{grid-template-columns:1fr;} }
+  .pin-block{background:var(--bg-panel); padding:26px 28px;}
+  .pin-block .pin-title{
+    font-family:var(--font-mono); font-size:11px; color:var(--text-faint);
+    letter-spacing:0.1em; text-transform:uppercase; margin-bottom:14px;
+    display:flex; align-items:center; gap:8px;
+  }
+  .pin-block .pin-title::before{content:'';width:8px;height:8px;border:1.5px solid var(--copper);border-radius:1px;transform:rotate(45deg);}
+  .chips{display:flex; flex-wrap:wrap; gap:8px;}
+  .chip{
+    font-family:var(--font-mono); font-size:12.5px; color:var(--text);
+    border:1px solid var(--border); padding:6px 11px; border-radius:4px;
+    background:rgba(255,255,255,0.02); transition:border-color .2s, color .2s;
+  }
+  .chip:hover{border-color:var(--signal); color:var(--signal);}
+
+  /* ---------- EXPERIENCE ---------- */
+  .exp-card{
+    border:1px solid var(--border); border-radius:8px; padding:30px 32px;
+    background:linear-gradient(150deg, rgba(192,133,82,0.06), transparent 60%);
+    position:relative;
+  }
+  .exp-top{display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:8px; margin-bottom:6px;}
+  .exp-role{font-family:var(--font-display); font-weight:600; font-size:1.2rem;}
+  .exp-date{font-family:var(--font-mono); font-size:12px; color:var(--copper-bright);}
+  .exp-org{color:var(--text-dim); font-size:0.95rem; margin-bottom:16px;}
+  .exp-list{list-style:none;}
+  .exp-list li{position:relative; padding-left:20px; margin-bottom:10px; color:var(--text-dim); font-size:0.95rem;}
+  .exp-list li::before{content:'▸'; position:absolute; left:0; color:var(--signal);}
+
+  /* ---------- PROJECTS (datasheet cards) ---------- */
+  .proj-grid{display:grid; grid-template-columns:1fr; gap:20px;}
+  .proj-card{
+    border:1px solid var(--border); border-radius:8px; overflow:hidden;
+    background:var(--bg-panel);
+  }
+  .proj-head{
+    display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;
+    padding:20px 26px; border-bottom:1px solid var(--border);
+    background:rgba(255,255,255,0.015);
+  }
+  .proj-name{font-family:var(--font-display); font-weight:600; font-size:1.12rem;}
+  .proj-date{font-family:var(--font-mono); font-size:11.5px; color:var(--text-faint); letter-spacing:0.04em;}
+  .proj-status{
+    font-family:var(--font-mono); font-size:10px; letter-spacing:0.08em; text-transform:uppercase;
+    padding:3px 9px; border-radius:20px; border:1px solid var(--signal-dim); color:var(--signal);
+  }
+  .proj-status.ongoing{border-color:rgba(226,109,90,0.4); color:var(--danger-red);}
+  .proj-body{padding:22px 26px;}
+  .proj-body ul{list-style:none;}
+  .proj-body li{position:relative; padding-left:18px; margin-bottom:9px; color:var(--text-dim); font-size:0.93rem;}
+  .proj-body li::before{content:'–'; position:absolute; left:0; color:var(--copper-bright);}
+  .proj-tags{display:flex; flex-wrap:wrap; gap:7px; margin-top:16px;}
+  .proj-tags span{
+    font-family:var(--font-mono); font-size:10.5px; color:var(--text-faint);
+    border:1px solid var(--border); padding:3px 9px; border-radius:4px;
+  }
+
+  /* ---------- CERTS / ORGS ---------- */
+  .two-col{display:grid; grid-template-columns:1.3fr 1fr; gap:56px;}
+  @media (max-width:800px){ .two-col{grid-template-columns:1fr; gap:44px;} }
+  .cert-item, .org-item{
+    display:flex; justify-content:space-between; align-items:flex-start; gap:14px;
+    padding:16px 0; border-bottom:1px solid var(--border);
+  }
+  .cert-item:last-child, .org-item:last-child{border-bottom:none;}
+  .cert-name{font-size:0.95rem; color:var(--text);}
+  .cert-sub{font-family:var(--font-mono); font-size:11.5px; color:var(--copper-bright); margin-top:4px;}
+  .cert-link{font-family:var(--font-mono); font-size:11px; color:var(--signal); text-decoration:none; white-space:nowrap;}
+  .org-role{font-family:var(--font-mono); font-size:11px; color:var(--text-faint);}
+  .org-date{font-family:var(--font-mono); font-size:11px; color:var(--text-dim); white-space:nowrap;}
+
+  /* ---------- CONTACT / FOOTER ---------- */
+  footer{padding:110px 0 60px; text-align:center; position:relative;}
+  footer .tag{font-family:var(--font-mono); font-size:11px; color:var(--copper-bright); letter-spacing:0.14em; text-transform:uppercase; margin-bottom:18px;}
+  footer h2{font-size:clamp(1.9rem,4.5vw,3.1rem);}
+  footer .sub{color:var(--text-dim); margin-top:14px; max-width:480px; margin-left:auto; margin-right:auto;}
+  .contact-links{display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin-top:38px;}
+  .contact-links a{
+    font-family:var(--font-mono); font-size:13px; padding:12px 22px; border:1px solid var(--border);
+    border-radius:6px; text-decoration:none; color:var(--text); transition:all .2s;
+  }
+  .contact-links a.primary{background:var(--signal); color:#08110d; border-color:var(--signal); font-weight:600;}
+  .contact-links a:hover{border-color:var(--signal); color:var(--signal);}
+  .contact-links a.primary:hover{opacity:0.88; color:#08110d;}
+  footer .end{margin-top:70px; font-family:var(--font-mono); font-size:10.5px; color:var(--text-faint); letter-spacing:0.06em;}
+
+  .reveal{opacity:0; transform:translateY(18px); transition:opacity .7s ease, transform .7s ease;}
+  .reveal.in{opacity:1; transform:translateY(0);}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-mark"><span class="dot"></span>KISHORE KUMAR A</div>
+  <div class="nav-links">
+    <a href="#summary">Summary</a>
+    <a href="#skills">Skills</a>
+    <a href="#experience">Experience</a>
+    <a href="#projects">Projects</a>
+    <a href="#certifications">Certs</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <svg class="scope" viewBox="0 0 500 500" preserveAspectRatio="none" aria-hidden="true">
+    <path class="scope-path" d="M0,250 L40,250 L55,150 L75,380 L95,80 L115,420 L135,250 L180,250 L200,180 L225,320 L250,250 L500,250"/>
+  </svg>
+  <div class="wrap hero-inner">
+    <div class="hero-text">
+      <div class="eyebrow">Final-Year EIE Engineer — Open to Opportunities</div>
+      <h1 class="name">KISHORE<br>KUMAR <span class="accent">A</span></h1>
+      <p class="hero-role">Embedded hardware, industrial automation and IoT sensor systems — building the layer between the physical world and the signal that describes it. <b>STM32 · ESP32 · Siemens S7-1200 PLC · Factory I/O</b></p>
+
+      <div class="readout">
+        <div><div class="label">Institution</div><div class="value">MIT, Anna University</div></div>
+        <div><div class="label">Program</div><div class="value">B.E. — EIE</div></div>
+        <div><div class="label">CGPA</div><div class="value">7.43 / 10</div></div>
+        <div><div class="label">Status</div><div class="value">Final Year</div></div>
+      </div>
+
+      <div class="scroll-cue"><span class="bar"></span> SCROLL TO EXPLORE</div>
+    </div>
+
+    <div class="hero-photo">
+      <div class="frame"><img src="assets/photo.jpg" alt="Kishore Kumar A"></div>
+      <div class="tag">FIG. 01 — SUBJECT</div>
+    </div>
+  </div>
+</header>
+
+<section id="summary" class="section reveal">
+  <div class="rail"></div>
+  <div class="pad"></div>
+  <div class="wrap section-inner">
+    <div class="sec-head">
+      <div class="sec-tag">01 · Profile</div>
+      <h2>Professional Summary</h2>
+    </div>
+    <p class="summary-text">
+      Final-year <span class="hl">Electronics and Instrumentation Engineering</span> student at Madras Institute of Technology, Anna University, with hands-on experience across embedded hardware design, industrial automation, and IoT-based sensor interfacing — built through an industrial internship and multidisciplinary academic projects. Comfortable working across the full stack of a physical system: microcontrollers, PLC logic, sensor interfacing, and the communication protocols that connect them.
+    </p>
+  </div>
+</section>
+
+<section id="skills" class="section reveal">
+  <div class="rail"></div>
+  <div class="pad"></div>
+  <div class="wrap section-inner">
+    <div class="sec-head">
+      <div class="sec-tag">02 · Pinout</div>
+      <h2>Technical Skills</h2>
+      <p class="sec-desc">Tools and platforms grouped the way a system would see them — languages, hardware, protocols, and utilities.</p>
+    </div>
+    <div class="pinout">
+      <div class="pin-block">
+        <div class="pin-title">Programming</div>
+        <div class="chips">
+          <span class="chip">C</span><span class="chip">Python</span><span class="chip">PLC Programming (Basics)</span>
+        </div>
+      </div>
+      <div class="pin-block">
+        <div class="pin-title">Hardware &amp; Platforms</div>
+        <div class="chips">
+          <span class="chip">Siemens S7-1200 PLC</span><span class="chip">STM32</span><span class="chip">ESP32</span><span class="chip">8051</span><span class="chip">Blynk IoT</span>
+        </div>
+      </div>
+      <div class="pin-block">
+        <div class="pin-title">Communication Protocols</div>
+        <div class="chips">
+          <span class="chip">HART</span><span class="chip">Modbus</span><span class="chip">PROFIBUS</span><span class="chip">Foundation Fieldbus</span><span class="chip">CAN</span><span class="chip">UART</span><span class="chip">I2C</span><span class="chip">SPI</span>
+        </div>
+      </div>
+      <div class="pin-block">
+        <div class="pin-title">Software Utilities</div>
+        <div class="chips">
+          <span class="chip">MATLAB</span><span class="chip">TIA Portal</span><span class="chip">Factory I/O</span><span class="chip">LabVIEW</span><span class="chip">LTspice</span><span class="chip">Proteus</span><span class="chip">Fusion 360</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="experience" class="section reveal">
+  <div class="rail"></div>
+  <div class="pad"></div>
+  <div class="wrap section-inner">
+    <div class="sec-head">
+      <div class="sec-tag">03 · Field Log</div>
+      <h2>Internship Experience</h2>
+    </div>
+    <div class="exp-card">
+      <div class="exp-top">
+        <div class="exp-role">Embedded Hardware Design Intern</div>
+        <div class="exp-date">MAY 2026 – JUN 2026</div>
+      </div>
+      <div class="exp-org">L&amp;T Technology Services, Chennai &nbsp;·&nbsp; <a class="cert-link" href="assets/certs/internship.pdf" target="_blank" rel="noopener">View Certificate</a></div>
+      <ul class="exp-list">
+        <li>Completed 5 weeks of industrial training in embedded hardware design, covering the full hardware development lifecycle — schematic design, PCB assembly (THT &amp; SMT), hardware validation, and testing methodologies.</li>
+        <li>Applied engineering concepts through Design Analysis Reports (DAR), component selection, PCB defect analysis, I²C-based sensor interfacing, DC-DC converter design, and BOM/Netlist generation, gaining exposure to industry-standard hardware development practices.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="projects" class="section reveal">
+  <div class="rail"></div>
+  <div class="pad"></div>
+  <div class="wrap section-inner">
+    <div class="sec-head">
+      <div class="sec-tag">04 · Datasheets</div>
+      <h2>Projects</h2>
+      <p class="sec-desc">Four builds spanning industrial control, IoT irrigation, analog measurement, and precision agriculture.</p>
+    </div>
+    <div class="proj-grid">
+
+      <div class="proj-card">
+        <div class="proj-head">
+          <div class="proj-name">Digital Twin for Level Process</div>
+          <div class="proj-date">DEC 2025 – APR 2026</div>
+        </div>
+        <div class="proj-body">
+          <ul>
+            <li>Developed a digital twin of an industrial level-control process to simulate and monitor real-time tank behavior.</li>
+            <li>Implemented PLC logic on Siemens S7-1200 via TIA Portal, integrating PID control, analog signal scaling, and Factory I/O for real-time visualization.</li>
+            <li>Achieved real-time synchronization between the virtual process and the PLC, validating industrial level-control strategies.</li>
+          </ul>
+          <div class="proj-tags"><span>Siemens S7-1200</span><span>TIA Portal</span><span>PID Control</span><span>Factory I/O</span></div>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-head">
+          <div class="proj-name">IoT-Based Soil Moisture Monitoring &amp; Pump Control</div>
+          <div class="proj-date">OCT 2025 – NOV 2025</div>
+        </div>
+        <div class="proj-body">
+          <ul>
+            <li>Designed an ESP32-based smart irrigation system to automate watering using real-time soil moisture sensing.</li>
+            <li>Integrated a soil moisture sensor and relay-controlled pump with the Blynk IoT platform for a live mobile dashboard.</li>
+            <li>Built a cost-effective control loop that activates the pump below a set threshold and stops it at optimal moisture — improving water utilization.</li>
+          </ul>
+          <div class="proj-tags"><span>ESP32</span><span>Blynk IoT</span><span>Relay Control</span><span>Remote Monitoring</span></div>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-head">
+          <div class="proj-name">Low Voltage DC Voltmeter Using Op-Amp</div>
+          <div class="proj-date">JAN 2025 – APR 2025</div>
+        </div>
+        <div class="proj-body">
+          <ul>
+            <li>Designed a low-voltage DC voltmeter using a 741 op-amp configured as a voltage-to-current converter for accurate multi-range measurement.</li>
+            <li>Implemented a range-selectable circuit with switchable feedback resistors and offset compensation, supporting 1V, 5V, 10V and 13V ranges.</li>
+            <li>Calibrated and validated against an analog voltmeter, with experimental results closely matching theory.</li>
+          </ul>
+          <div class="proj-tags"><span>741 Op-Amp</span><span>Analog Design</span><span>Calibration</span></div>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-head">
+          <div class="proj-name">Smart Crop Prediction &amp; Monitoring System</div>
+          <div style="display:flex; align-items:center; gap:10px;">
+            <div class="proj-date">PRESENT</div>
+            <div class="proj-status ongoing">Ongoing · Govt Funded</div>
+          </div>
+        </div>
+        <div class="proj-body">
+          <ul>
+            <li>Developing a crop prediction and monitoring system on STM32 for real-time acquisition of environmental and soil parameters, under a CMRG government-funded initiative.</li>
+            <li>Integrating an 8-in-1 soil and rain sensor with ESP32-based IoT connectivity to transmit field data to the cloud for remote monitoring.</li>
+            <li>Currently implementing a machine learning model to analyze sensor data and generate crop and agricultural recommendations for precision farming.</li>
+          </ul>
+          <div class="proj-tags"><span>STM32</span><span>ESP32</span><span>Machine Learning</span><span>Precision Farming</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="certifications" class="section reveal">
+  <div class="rail"></div>
+  <div class="pad"></div>
+  <div class="wrap section-inner">
+    <div class="sec-head">
+      <div class="sec-tag">05 · Verification</div>
+      <h2>Certifications &amp; Organisations</h2>
+    </div>
+    <div class="two-col">
+      <div>
+        <div class="cert-item">
+          <div>
+            <div class="cert-name">A Brief Introduction to Micro-Sensors</div>
+            <div class="cert-sub">NPTEL, IISER Bhopal — Elite Silver (85%), Top 5% of participants</div>
+          </div>
+          <a class="cert-link" href="assets/certs/nptel.pdf" target="_blank" rel="noopener">View PDF</a>
+        </div>
+        <div class="cert-item">
+          <div>
+            <div class="cert-name">Industrial Automation Using Siemens PLC and HMI</div>
+            <div class="cert-sub">3-Day Hands-On Skill Development Programme</div>
+          </div>
+          <a class="cert-link" href="assets/certs/siemens_plc.pdf" target="_blank" rel="noopener">View PDF</a>
+        </div>
+        <div class="cert-item">
+          <div>
+            <div class="cert-name">Application of AI in Smart BMS for EV</div>
+            <div class="cert-sub">3-Day Hands-On Skill Development Programme</div>
+          </div>
+          <a class="cert-link" href="assets/certs/ai_bms.pdf" target="_blank" rel="noopener">View PDF</a>
+        </div>
+      </div>
+      <div>
+        <div class="org-item">
+          <div>
+            <div class="cert-name">ISA — International Society of Automation</div>
+            <div class="org-role">Student Member</div>
+          </div>
+          <div class="org-date">2025 – Present</div>
+        </div>
+        <div class="org-item">
+          <div>
+            <div class="cert-name">YRC — Youth Red Cross, MIT</div>
+            <div class="org-role">Volunteer</div>
+          </div>
+          <div class="org-date">2023 – Present</div>
+        </div>
+        <div class="org-item">
+          <div>
+            <div class="cert-name">IEA — Instrumentation Engineers Association, MIT</div>
+            <div class="org-role">Member</div>
+          </div>
+          <div class="org-date">2023 – Present</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer id="contact" class="reveal">
+  <div class="wrap">
+    <div class="tag">06 · Contact</div>
+    <h2>Let's build something<br>that reads the real world.</h2>
+    <p class="sub">Open to full-time and internship roles in embedded systems, industrial automation, and IoT. Reach out directly — I reply fast.</p>
+    <div class="contact-links">
+      <a class="primary" href="mailto:kishorekumar020413@gmail.com">Email Me</a>
+      <a href="tel:+919600025176">+91 96000 25176</a>
+      <a href="https://www.linkedin.com/in/kishore-kumar-a-914018379" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://github.com/KishoreKumarA13" target="_blank" rel="noopener">GitHub</a>
+    </div>
+    <div class="end">KISHORE KUMAR A — MADRAS INSTITUTE OF TECHNOLOGY, ANNA UNIVERSITY</div>
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, {threshold:0.12});
+  revealEls.forEach(el=>io.observe(el));
+
+  // Active nav link on scroll
+  const sections = document.querySelectorAll('section[id], footer[id]');
+  const links = document.querySelectorAll('.nav-links a');
+  const navIo = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      const id = entry.target.getAttribute('id');
+      const link = document.querySelector('.nav-links a[href="#'+id+'"]');
+      if(!link) return;
+      if(entry.isIntersecting){ links.forEach(l=>l.classList.remove('active')); link.classList.add('active'); }
+    });
+  }, {rootMargin:'-40% 0px -50% 0px'});
+  sections.forEach(s=>navIo.observe(s));
+</script>
+
+</body>
+</html>
